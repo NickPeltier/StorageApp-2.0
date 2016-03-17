@@ -28,8 +28,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.IntDef;
+import 	com.google.android.gms.vision.CameraSource.Builder;
 
-
+/**
+ * This is the main class that will be called each time the application is launched.
+ * Extends the action bar activity (The sidebar in the application)
+ *
+ * Will use the activity_main.xml file as layout (Location: app/res/layout)
+ */
 public class MainActivity extends ActionBarActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -60,7 +66,12 @@ public class MainActivity extends ActionBarActivity
 
 
 
-
+    /**
+     *
+     * @param savedInstanceState
+     *
+     * This method is called everytime the app is launched
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -209,6 +220,15 @@ public class MainActivity extends ActionBarActivity
         client.disconnect();
     }
 
+
+    /**
+     *
+     * @param v
+     *
+     * v is the view on the screen (.xml layout file (Location: app/res/layout))
+     *
+     * Method that is called everytime the user touches the screen
+     */
     @Override
     public void onClick(View v) {
 

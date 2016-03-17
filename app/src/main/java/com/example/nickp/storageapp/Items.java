@@ -16,6 +16,12 @@ public class Items extends AppCompatActivity implements OnClickListener
 {
     List name, inv;
 
+    /**
+     *
+     * @param savedInstanceState
+     *
+     * This method is called everytime the "Items" tab is selected by the user.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +35,14 @@ public class Items extends AppCompatActivity implements OnClickListener
         setInvList();
     }
 
-
+    /**
+     *
+     * @param v
+     *
+     * v is the view on the screen (.xml layout file (Location: app/res/layout))
+     *
+     * Method that is called everytime the user touches the screen
+     */
     @Override
     public void onClick(View v)
     {

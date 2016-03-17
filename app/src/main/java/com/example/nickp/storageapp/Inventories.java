@@ -23,7 +23,14 @@ public class Inventories extends AppCompatActivity implements View.OnClickListen
         //setSupportActionBar(toolbar);
     }
 
-
+    /**
+     *
+     * @param v
+     *
+     * v is the view on the screen (.xml layout file (Location: app/res/layout))
+     *
+     * Method that is called everytime the user touches the screen
+     */
     @Override
     public void onClick(View v)
     {

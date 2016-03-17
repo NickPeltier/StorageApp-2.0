@@ -13,12 +13,28 @@ import java.io.IOException;
 
 /**
  * Created by nickp on 2/20/2016.
+ *
+ * This class is used to create the open the camera and use it as a view that can be called at
+ * any tim.
+ *
+ * The camera is assigned to the surface holder object after the class validates that the device
+ * has a camera, and that the user has given the application permission to access the camera.
+ *
+ * Orientation is also adjusted.
  */
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     private GoogleApiClient client;
     private SurfaceHolder mHolder;
     private Camera mCamera;
 
+    /**
+     *
+     * @param context
+     * @param camera
+     *
+     * Contect is the view that is using this class
+     * Camera is the camera on the device using the class
+     */
     public CameraView(Context context, Camera camera) {
         super(context);
 

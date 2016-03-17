@@ -12,6 +12,12 @@ import android.widget.TextView;
 public class Settings extends AppCompatActivity implements View.OnClickListener
 {
 
+    /**
+     *
+     * @param savedInstanceState
+     *
+     * This method is called everytime the "Settings" tab is selected by the user.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +28,14 @@ public class Settings extends AppCompatActivity implements View.OnClickListener
     }
 
 
+    /**
+     *
+     * @param v
+     *
+     * v is the view on the screen (.xml layout file (Location: app/res/layout))
+     *
+     * Method that is called everytime the user touches the screen
+     */
     @Override
     public void onClick(View v) {
 
