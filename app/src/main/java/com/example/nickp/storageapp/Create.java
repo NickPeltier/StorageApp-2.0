@@ -1,18 +1,26 @@
 package com.example.nickp.storageapp;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.android.gms.common.api.GoogleApiClient;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class Create extends AppCompatActivity implements  View.OnClickListener{
-    EditText name;                      //Name of the Inventory textbox
-    Button finish;                      //Button to finish the adding method
-    String invName = "";                //Name of the Inventory
+    EditText name;                                              //Name of the Inventory textbox
+    Button finish;                                              //Button to finish the adding method
+    String invName = "";                                        //Name of the Inventory
+    private static final String END_OF_FILE_NAME = ".txt";
+    private String fName;
+    private static final String INV_FOLDER = "Inventories";
+
 
     /**
      *
@@ -56,8 +64,27 @@ public class Create extends AppCompatActivity implements  View.OnClickListener{
 
             if(invName != "")
             {
-
+                fName = invName + END_OF_FILE_NAME;
+                boolean copy = checkFilename();
             }
         }
     }
+
+    //Method to ceck to see if file exists
+    private boolean checkFilename(){
+        String filepath = Environment.getExternalStorageDirectory().getPath();
+        File file = new File(filepath, fName);
+
+        if(!file.exists()){
+            file.mkdirs();
+            return false;
+        }
+
+        else
+        {
+            return true;
+        }
+    }
+
+
 }

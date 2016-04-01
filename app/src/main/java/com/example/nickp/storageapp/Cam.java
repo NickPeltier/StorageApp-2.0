@@ -1,7 +1,8 @@
 package com.example.nickp.storageapp;
 
-import android.hardware.Camera;
-import android.net.Uri;
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -11,8 +12,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.images.Size;
 import com.google.android.gms.vision.CameraSource;
@@ -20,7 +19,13 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import io.github.johncipponeri.outpanapi.OutpanAPI;
+import io.github.johncipponeri.outpanapi.OutpanObject;
 
 /**
  * Created by nickp on 2/20/2016.
@@ -31,11 +36,15 @@ import java.io.IOException;
 public class Cam extends MainActivity {
     private GoogleApiClient client;
 
-    SurfaceView cameraView;                 //Camara view object
-    TextView barcodeInfo;                   //Textbox that will display barcode info
+    private String name;
 
-    BarcodeDetector barcodeDetector;        //Object that detects barcodes
-    CameraSource cameraSource;              //Object tha tattaches BarcodeDetector to camera
+    private SurfaceView cameraView;                 //Camara view object
+    private TextView barcodeInfo;                   //Textbox that will display barcode info
+
+    private BarcodeDetector barcodeDetector;        //Object that detects barcodes
+    private CameraSource cameraSource;              //Object tha tattaches BarcodeDetector to camera
+
+    private OutpanAPI api = new OutpanAPI("37c42b9ab3933db7d57285074cc1546c");
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -52,6 +61,9 @@ public class Cam extends MainActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Class test = getClass();
+        Logger.getLogger(test.getName()).setLevel(Level.OFF);
+
         //Create the screen with the layout file
         super.onCreate(savedInstanceState);
         setContentView(R.layout.camera);
@@ -63,7 +75,7 @@ public class Cam extends MainActivity {
         //Variable for the barcode scanner object
         barcodeDetector =
                 new BarcodeDetector.Builder(this)
-                        .setBarcodeFormats(Barcode.QR_CODE)
+                        .setBarcodeFormats(Barcode.UPC_A)
                         .build();
 
         //Variable to set the camera to look for barcodes
@@ -101,11 +113,14 @@ public class Cam extends MainActivity {
                         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                         if (barcodes.size() != 0) {
+                            Barcode test = barcodes.valueAt(0);
+                            String raw = test.rawValue;
+
+                            name = sendBCInternet(Cam.this, raw, api);
+
                             barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
                                 public void run() {
-                                    barcodeInfo.setText(    // Update the TextView
-                                            barcodes.valueAt(0).displayValue
-                                    );
+                                    barcodeInfo.setText(name);
                                 }
                             });
                         }
@@ -138,5 +153,21 @@ public class Cam extends MainActivity {
                 System.exit(0);
             }
         });
+    }
+
+    public String sendBCInternet(Context context, String barcode, OutpanAPI api)
+    {
+        String name = null;
+        OutpanObject product = null;
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo networkinfo = cm.getActiveNetworkInfo();
+
+        if ( networkinfo != null &&  networkinfo.isConnected())
+        {
+            product = api.getProduct(barcode);
+
+        }
+        return product.name;
     }
 }

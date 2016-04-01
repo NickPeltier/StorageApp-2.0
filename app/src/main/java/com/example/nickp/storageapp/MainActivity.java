@@ -110,6 +110,12 @@ public class MainActivity extends ActionBarActivity
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
 
+        /*
+        Need to put code here to check to see if the inventory text file has been created
+        If not, then create it, if so then generate the list from the default inventory
+         */
+
+
     }
 
     @Override
