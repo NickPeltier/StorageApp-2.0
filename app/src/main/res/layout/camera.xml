@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <SurfaceView
+        android:layout_width="640dp"
+        android:layout_height="355dp"
+        android:id="@+id/camera_view"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/code_info"
+        android:textSize="20sp"
+        android:text="Nothing to read."
+        android:layout_below="@+id/imgClose"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgClose"
+        android:layout_gravity="right|top"
+        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        android:padding="20dp"/>
+
+</RelativeLayout>
+
