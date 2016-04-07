@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -22,8 +23,9 @@ public class Inventories extends AppCompatActivity implements View.OnClickListen
 
     File directory = new File("/app/res/raw");
 
-    EditText title;
-    Button firstButt;
+    //EditText title;
+    TextView title;
+    Button showPantryButton, showCartButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,11 @@ public class Inventories extends AppCompatActivity implements View.OnClickListen
         //setSupportActionBar(toolbar);
         //setSupportActionBar(toolbar);
 
-        title = (EditText)findViewById(R.id.parnt);
-        firstButt = (Button)findViewById(R.id.inv1);
-
+        // the following causes a RTException for bad cast...
+        //title = (EditText)findViewById(R.id.parnt);
+        title = (TextView) findViewById(R.id.inv1);  // this seems OK
+        showPantryButton = (Button)findViewById(R.id.inv1);
+        showCartButton = (Button) findViewById(R.id.inv2);
 
     }
 
