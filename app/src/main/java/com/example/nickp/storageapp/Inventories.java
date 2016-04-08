@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -13,7 +14,7 @@ import java.io.OutputStreamWriter;
 /**
  * Created by nickp on 2/29/2016.
  */
-public class Inventories extends AppCompatActivity implements View.OnClickListener
+public class Inventories extends MainActivity implements View.OnClickListener
 {
     private static final String END_OF_FILE_NAME = ".txt";
     private static String FILE_NAME;
@@ -22,7 +23,7 @@ public class Inventories extends AppCompatActivity implements View.OnClickListen
 
     File directory = new File("/app/res/raw");
 
-    EditText title;
+    TextView title;
     Button firstButt;
 
     @Override
@@ -34,7 +35,7 @@ public class Inventories extends AppCompatActivity implements View.OnClickListen
         //setSupportActionBar(toolbar);
         //setSupportActionBar(toolbar);
 
-        title = (EditText)findViewById(R.id.parnt);
+        title = (TextView)findViewById(R.id.parnt);
         firstButt = (Button)findViewById(R.id.inv1);
 
 

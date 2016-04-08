@@ -1,6 +1,5 @@
 package com.example.nickp.storageapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,7 +19,6 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +44,7 @@ public class Cam extends MainActivity {
     private CameraSource cameraSource;              //Object tha tattaches BarcodeDetector to camera
 
     private OutpanAPI api = new OutpanAPI("37c42b9ab3933db7d57285074cc1546c");
+    private ImageButton next;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -71,6 +71,7 @@ public class Cam extends MainActivity {
         //Assign variables to widgets on the screen (ID's in .XML file)
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
         barcodeInfo = (TextView) findViewById(R.id.code_info);
+        next = (ImageButton) findViewById(R.id.cont);
 
         //Variable for the barcode scanner object
         barcodeDetector =
@@ -116,11 +117,12 @@ public class Cam extends MainActivity {
                             Barcode test = barcodes.valueAt(0);
                             String raw = test.rawValue;
 
-                            name = sendBCInternet(Cam.this, raw, api);
+                            name = sendBCInternet(getApplicationContext(), raw, api);
 
                             barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
                                 public void run() {
                                     barcodeInfo.setText(name);
+                                    next.setVisibility(View.VISIBLE);
                                 }
                             });
                         }
@@ -151,6 +153,14 @@ public class Cam extends MainActivity {
             public void onClick(View view) {
                 //Close the screen
                 System.exit(0);
+            }
+        });
+
+        //Button to continue to add to cart
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }
