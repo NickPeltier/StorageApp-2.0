@@ -3,6 +3,7 @@
     package="com.example.nickp.storageapp">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="barcode"/>
 

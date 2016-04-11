@@ -1,34 +1,30 @@
 package com.example.nickp.storageapp;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.hardware.Camera;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.IntDef;
-import 	com.google.android.gms.vision.CameraSource.Builder;
+
+import io.github.johncipponeri.outpanapi.OutpanAPI;
+import io.github.johncipponeri.outpanapi.OutpanObject;
 
 /**
  * This is the main class that will be called each time the application is launched.
@@ -64,6 +60,7 @@ public class MainActivity extends ActionBarActivity
     //Variable to hold name of defualt inv.
     String defInv;
 
+    Context context = this;
 
 
     /**
@@ -80,15 +77,32 @@ public class MainActivity extends ActionBarActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        ConnectivityManager check = (ConnectivityManager)
+                this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo[] info = check.getAllNetworkInfo();
+
+        for (int i = 0; i<info.length; i++){
+            if (info[i].getState() == NetworkInfo.State.CONNECTED){
+                Toast.makeText(context, "Internet is connected",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+
 
         //Assign buttons and Text boxes
         inv = (TextView)findViewById(R.id.inv);
         inv.setOnClickListener(this);
 
 
+
+
         if(invCount == 0)
         {
-            inv.setText("Please add an inventory");
+            inv.setText("Please Create Inv.");
         }
 
 

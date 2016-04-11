@@ -46,6 +46,8 @@ public class Cam extends MainActivity {
     private OutpanAPI api = new OutpanAPI("37c42b9ab3933db7d57285074cc1546c");
     private ImageButton next;
 
+    private final String ERROR = "Product Information Not Found";
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -109,19 +111,41 @@ public class Cam extends MainActivity {
                     public void release() {
                     }
 
+                    //Metod that is called when the camera detects a barcode
                     @Override
                     public void receiveDetections(Detector.Detections<Barcode> detections) {
+                        //Create an array of the barcode digits
                         final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-
                         if (barcodes.size() != 0) {
                             Barcode test = barcodes.valueAt(0);
                             String raw = test.rawValue;
 
-                            name = sendBCInternet(getApplicationContext(), raw, api);
+                            //Create the Outpan Object and send it the barcode
+                            OutpanObject product = api.getProductName(raw);
+                            String temp;
+
+                            //If the product was found on the database
+                            if(product != null)
+                            {
+                                //Set String to the products name
+                                temp = product.name;
+                            }
+
+                            else
+                            {
+                                //Set String to the error message
+                                temp = ERROR;
+                            }
+
+                            //String created to be used in the text box
+                            final String prodName = temp;
 
                             barcodeInfo.post(new Runnable() {    // Use the post method of the TextView
                                 public void run() {
-                                    barcodeInfo.setText(name);
+                                    //Set textbox to the name of the product
+                                    barcodeInfo.setText(prodName);
+
+                                    //Set the check button to visible
                                     next.setVisibility(View.VISIBLE);
                                 }
                             });
@@ -163,21 +187,5 @@ public class Cam extends MainActivity {
 
             }
         });
-    }
-
-    public String sendBCInternet(Context context, String barcode, OutpanAPI api)
-    {
-        String name = null;
-        OutpanObject product = null;
-
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        android.net.NetworkInfo networkinfo = cm.getActiveNetworkInfo();
-
-        if ( networkinfo != null &&  networkinfo.isConnected())
-        {
-            product = api.getProduct(barcode);
-
-        }
-        return product.name;
     }
 }
