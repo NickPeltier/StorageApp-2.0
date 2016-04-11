@@ -122,20 +122,15 @@ public class Cam extends MainActivity {
 
                             //Create the Outpan Object and send it the barcode
                             OutpanObject product = api.getProductName(raw);
-                            String temp;
+                            String temp = product.name;
 
-                            //If the product was found on the database
-                            if(product != null)
-                            {
-                                //Set String to the products name
-                                temp = product.name;
-                            }
-
-                            else
+                            //If the product was not found on the database
+                            if(temp == "")
                             {
                                 //Set String to the error message
                                 temp = ERROR;
                             }
+
 
                             //String created to be used in the text box
                             final String prodName = temp;
