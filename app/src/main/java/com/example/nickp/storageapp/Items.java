@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Items extends AppCompatActivity implements OnClickListener
 {
-    List name, inv;
+    String name, inv;
 
     /**
      *
@@ -29,10 +29,6 @@ public class Items extends AppCompatActivity implements OnClickListener
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //Set the lists
-        setItemList();
-        setInvList();
     }
 
     /**

@@ -77,16 +77,19 @@ public class MainActivity extends ActionBarActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //These 2 lines of code allow the app to be able to send to any URL we tell it to
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        //Object that holds all of the possible networking objects associated with the users device
         ConnectivityManager check = (ConnectivityManager)
                 this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-
         NetworkInfo[] info = check.getAllNetworkInfo();
 
+        //Confirmation loop for testing
         for (int i = 0; i<info.length; i++){
             if (info[i].getState() == NetworkInfo.State.CONNECTED){
+                //Popup that alerts if app is connected to the internet
                 Toast.makeText(context, "Internet is connected",
                         Toast.LENGTH_SHORT).show();
             }
